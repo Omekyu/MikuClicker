@@ -17,10 +17,13 @@ namespace Clicker2
       clicks = clicks + i;
       lblClicks.Text = "Mikus: " + clicks;
 
-      if (achivements.Contains(clicks) == true)
+      foreach (int j in achivements)
       {
-        MessageBox.Show($"Du hast {clicks} Mikus.", "Miku Clicker", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        imgMiku.Location = new Point(imgMiku.Location.X, 137);
+        if (clicks == j)
+        {
+          MessageBox.Show($"Du hast {j} Mikus.", "Miku Clicker", MessageBoxButtons.OK, MessageBoxIcon.Information);
+          imgMiku.Location = new Point(imgMiku.Location.X, 137);
+        }
       }
     }
 
