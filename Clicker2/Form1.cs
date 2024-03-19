@@ -63,12 +63,12 @@ namespace Clicker2
       MoveMiku(-10);
     }
 
-    private void timer1_Tick(object sender, EventArgs e)
+    private async void timer1_Tick(object sender, EventArgs e)
     {
       // Add one to clicks on each timer cycle and automatically move miku down and back up shortly after
       Add(1);
       MoveMiku(10);
-      Thread.Sleep(50);
+      await Task.Delay(50);
       MoveMiku(-10);
     }
   }
