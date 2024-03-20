@@ -24,7 +24,7 @@ namespace Clicker2
       File.WriteAllText(_saveDataPath, JsonConvert.SerializeObject(_saveData, Formatting.Indented));
 
       autoClickerTimer.Interval = _saveData.AutoClickerInterval;
-      if (_saveData.Mikus > 50)
+      if (_saveData.Mikus >= 50)
         autoClickerTimer.Start();
 
       UpdateUI();
