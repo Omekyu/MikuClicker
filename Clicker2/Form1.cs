@@ -1,4 +1,5 @@
 using Microsoft.VisualBasic;
+using Newtonsoft.Json;
 
 namespace Clicker2
 {
@@ -6,13 +7,24 @@ namespace Clicker2
   {
     private readonly int _mikuNormalY;
 
-    private int _clicks = 0;
+    private readonly SaveData _saveData = new SaveData();
     private readonly int[] _achivements = { 20, 40, 60, 80, 100 };
+    private readonly string _saveDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MikuClicker", "save.json");
 
     public Form1()
     {
       InitializeComponent();
       _mikuNormalY = imgMiku.Location.Y;
+
+      Directory.CreateDirectory(Path.GetDirectoryName(_saveDataPath)!);
+
+      if (File.Exists(_saveDataPath))
+        _saveData = JsonConvert.DeserializeObject<SaveData>(File.ReadAllText(_saveDataPath)) ?? new SaveData();
+
+      File.WriteAllText(_saveDataPath, JsonConvert.SerializeObject(_saveData, Formatting.Indented));
+
+
+      UpdateUI();
     }
 
     private void DragMikuDown(int amount)
@@ -20,16 +32,19 @@ namespace Clicker2
       imgMiku.Location = new Point(imgMiku.Location.X, imgMiku.Location.Y + amount);
     }
 
+    private void UpdateUI()
+    {
+      lblClicks.Text = "Mikus: " + _saveData.Mikus;
+    }
+
     private void Add(int i)
     {
-      _clicks = _clicks + i;
-      lblClicks.Text = "Mikus: " + _clicks;
+      _saveData.Mikus = _saveData.Mikus + i;
+      UpdateUI();
 
+      if (_achivements.Contains(_saveData.Mikus))
+        MessageBox.Show($"Du hast {_saveData.Mikus} Mikus.", "Miku Clicker", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-      if (_achivements.Contains(_clicks))
-      {
-        MessageBox.Show($"Du hast {_clicks} Mikus.", "Miku Clicker", MessageBoxButtons.OK, MessageBoxIcon.Information);
-      }
 
     }
 
@@ -38,7 +53,7 @@ namespace Clicker2
       Add(1);
       DragMikuDown(10);
 
-      if (_clicks == 50)
+      if (_saveData.Mikus == 50)
       {
         DialogResult dg = MessageBox.Show("Du hast den Autoclicker freigeschlatet!\r\nMöchtest du ihn einschalten?", "Miku Clicker", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
         if (dg == DialogResult.Yes)
@@ -57,6 +72,13 @@ namespace Clicker2
       int difference = imgMiku.Location.Y - _mikuNormalY;
       int tenPercent = (int)Math.Ceiling(difference * 0.1);
       DragMikuDown(-tenPercent);
+    }
+
+    private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+    {
+      DialogResult dg = MessageBox.Show("Möchtest du deinen\nFortschritt speichern?", "Miku Clicker", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+      if (dg == DialogResult.Yes)
+        File.WriteAllText(_saveDataPath, JsonConvert.SerializeObject(_saveData, Formatting.Indented));
     }
   }
 }

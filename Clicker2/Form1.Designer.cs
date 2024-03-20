@@ -76,8 +76,11 @@
       Controls.Add(lblClicks);
       Controls.Add(imgMiku);
       FormBorderStyle = FormBorderStyle.FixedSingle;
+      MaximizeBox = false;
       Name = "Form1";
+      StartPosition = FormStartPosition.CenterScreen;
       Text = "Miku Clicker";
+      FormClosing += Form1_FormClosing;
       ((System.ComponentModel.ISupportInitialize)imgMiku).EndInit();
       ResumeLayout(false);
     }
