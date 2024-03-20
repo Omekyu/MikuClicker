@@ -31,21 +31,21 @@
       components = new System.ComponentModel.Container();
       imgMiku = new PictureBox();
       lblClicks = new Label();
-      timer1 = new System.Windows.Forms.Timer(components);
+      autoClickerTimer = new System.Windows.Forms.Timer(components);
+      dragUpTimer = new System.Windows.Forms.Timer(components);
       ((System.ComponentModel.ISupportInitialize)imgMiku).BeginInit();
       SuspendLayout();
       // 
       // imgMiku
       // 
       imgMiku.Image = Properties.Resources.toppng_com_12954533_vocaloid_chibi_miku_592x511;
-      imgMiku.Location = new Point(175, 137);
+      imgMiku.Location = new Point(178, 137);
       imgMiku.Name = "imgMiku";
       imgMiku.Size = new Size(308, 289);
       imgMiku.SizeMode = PictureBoxSizeMode.Zoom;
       imgMiku.TabIndex = 0;
       imgMiku.TabStop = false;
       imgMiku.MouseDown += imgMiku_MouseDown;
-      imgMiku.MouseUp += imgMiku_MouseUp;
       // 
       // lblClicks
       // 
@@ -57,10 +57,16 @@
       lblClicks.Text = "Mikus: 0";
       lblClicks.TextAlign = ContentAlignment.MiddleCenter;
       // 
-      // timer1
+      // autoClickerTimer
       // 
-      timer1.Interval = 1000;
-      timer1.Tick += timer1_Tick;
+      autoClickerTimer.Interval = 1000;
+      autoClickerTimer.Tick += autoClickerTimer_Tick;
+      // 
+      // dragUpTimer
+      // 
+      dragUpTimer.Enabled = true;
+      dragUpTimer.Interval = 10;
+      dragUpTimer.Tick += dragUpTimer_Tick;
       // 
       // Form1
       // 
@@ -80,6 +86,7 @@
 
     private PictureBox imgMiku;
     private Label lblClicks;
-    private System.Windows.Forms.Timer timer1;
+    private System.Windows.Forms.Timer autoClickerTimer;
+    private System.Windows.Forms.Timer dragUpTimer;
   }
 }
