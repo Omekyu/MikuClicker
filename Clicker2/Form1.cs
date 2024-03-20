@@ -23,6 +23,9 @@ namespace Clicker2
 
       File.WriteAllText(_saveDataPath, JsonConvert.SerializeObject(_saveData, Formatting.Indented));
 
+      autoClickerTimer.Interval = _saveData.AutoClickerInterval;
+      if (_saveData.Mikus > 50)
+        autoClickerTimer.Start();
 
       UpdateUI();
     }
@@ -44,14 +47,13 @@ namespace Clicker2
 
       if (_achivements.Contains(_saveData.Mikus))
         MessageBox.Show($"Du hast {_saveData.Mikus} Mikus.", "Miku Clicker", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-
     }
 
     private void imgMiku_MouseDown(object sender, MouseEventArgs e)
     {
-      Add(1);
+
       DragMikuDown(10);
+      Add(1);
 
       if (_saveData.Mikus == 50)
       {
@@ -63,8 +65,8 @@ namespace Clicker2
 
     private void autoClickerTimer_Tick(object sender, EventArgs e)
     {
-      Add(1);
       DragMikuDown(5);
+      Add(1);
     }
 
     private void dragUpTimer_Tick(object sender, EventArgs e)
