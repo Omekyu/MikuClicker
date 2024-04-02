@@ -51,7 +51,6 @@ namespace Clicker2
 
     private void imgMiku_MouseDown(object sender, MouseEventArgs e)
     {
-
       DragMikuDown(10);
       Add(1);
 
