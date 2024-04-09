@@ -1,5 +1,7 @@
 using Microsoft.VisualBasic;
 using Newtonsoft.Json;
+using System.Diagnostics.Eventing.Reader;
+using System.Globalization;
 
 namespace Clicker2
 {
@@ -27,6 +29,12 @@ namespace Clicker2
       if (_saveData.Mikus >= 50)
         autoClickerTimer.Start();
 
+      if (_saveData.WaitTime == 0)
+      {
+        btnBonus.Enabled = true;
+        waitTimer.Stop();
+      }
+
       UpdateUI();
     }
 
@@ -38,6 +46,10 @@ namespace Clicker2
     private void UpdateUI()
     {
       lblClicks.Text = "Mikus: " + _saveData.Mikus;
+      if (_saveData.WaitTime == 0)
+        btnBonus.Text = "Bonus";
+      else
+        btnBonus.Text = $"Next: {Math.Round(_saveData.WaitTime / 10d, 1).ToString("N1", CultureInfo.InvariantCulture)}s";
     }
 
     private void Add(int i)
@@ -81,6 +93,29 @@ namespace Clicker2
       DialogResult dg = MessageBox.Show("Möchtest du deinen\nFortschritt speichern?", "Miku Clicker", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
       if (dg == DialogResult.Yes)
         File.WriteAllText(_saveDataPath, JsonConvert.SerializeObject(_saveData, Formatting.Indented));
+    }
+
+    private void waitTimer_Tick(object sender, EventArgs e)
+    {
+      _saveData.WaitTime--;
+
+      if (_saveData.WaitTime == 0)
+      {
+        btnBonus.Enabled = true;
+        waitTimer.Stop();
+      }
+
+      UpdateUI();
+    }
+
+    private void btnBonus_Click(object sender, EventArgs e)
+    {
+      _saveData.Mikus += 100;
+      _saveData.WaitTime = 600;
+
+      btnBonus.Enabled = false;
+      waitTimer.Start();
+      UpdateUI();
     }
   }
 }

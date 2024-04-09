@@ -33,6 +33,8 @@
       lblClicks = new Label();
       autoClickerTimer = new System.Windows.Forms.Timer(components);
       dragUpTimer = new System.Windows.Forms.Timer(components);
+      btnBonus = new Button();
+      waitTimer = new System.Windows.Forms.Timer(components);
       ((System.ComponentModel.ISupportInitialize)imgMiku).BeginInit();
       SuspendLayout();
       // 
@@ -68,11 +70,30 @@
       dragUpTimer.Interval = 10;
       dragUpTimer.Tick += dragUpTimer_Tick;
       // 
+      // btnBonus
+      // 
+      btnBonus.Enabled = false;
+      btnBonus.FlatStyle = FlatStyle.Flat;
+      btnBonus.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+      btnBonus.Location = new Point(529, 392);
+      btnBonus.Name = "btnBonus";
+      btnBonus.Size = new Size(105, 34);
+      btnBonus.TabIndex = 2;
+      btnBonus.Text = "Bonus";
+      btnBonus.UseVisualStyleBackColor = true;
+      btnBonus.Click += btnBonus_Click;
+      // 
+      // waitTimer
+      // 
+      waitTimer.Enabled = true;
+      waitTimer.Tick += waitTimer_Tick;
+      // 
       // Form1
       // 
       AutoScaleDimensions = new SizeF(7F, 15F);
       AutoScaleMode = AutoScaleMode.Font;
       ClientSize = new Size(646, 438);
+      Controls.Add(btnBonus);
       Controls.Add(lblClicks);
       Controls.Add(imgMiku);
       FormBorderStyle = FormBorderStyle.FixedSingle;
@@ -91,5 +112,7 @@
     private Label lblClicks;
     private System.Windows.Forms.Timer autoClickerTimer;
     private System.Windows.Forms.Timer dragUpTimer;
+    private Button btnBonus;
+    private System.Windows.Forms.Timer waitTimer;
   }
 }

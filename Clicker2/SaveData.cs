@@ -10,6 +10,7 @@ namespace Clicker2
   {
     public int Mikus { get; set; } = 0;
     public int AutoClickerInterval { get; set; } = 1000;
+    public int WaitTime { get; set; } = 600;
 
   }
 }
