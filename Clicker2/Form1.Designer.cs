@@ -29,6 +29,7 @@
     private void InitializeComponent()
     {
       components = new System.ComponentModel.Container();
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
       imgMiku = new PictureBox();
       lblClicks = new Label();
       autoClickerTimer = new System.Windows.Forms.Timer(components);
@@ -97,6 +98,7 @@
       Controls.Add(lblClicks);
       Controls.Add(imgMiku);
       FormBorderStyle = FormBorderStyle.FixedSingle;
+      Icon = (Icon)resources.GetObject("$this.Icon");
       MaximizeBox = false;
       Name = "Form1";
       StartPosition = FormStartPosition.CenterScreen;
